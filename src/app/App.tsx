@@ -1,7 +1,7 @@
-import { LoginPage } from '../pages/LoginPage';
+import { Error404Page } from "../pages/Error404Page/index";
 
 function App() {
-  return <LoginPage />;
+  return <Error404Page />;
 }
 
 export default App;
