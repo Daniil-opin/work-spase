@@ -1,6 +1,7 @@
 import { Link, useLocation } from "react-router-dom";
 
 import styles from "./index.module.scss";
+import ProfileMenu from "../profileMenu/index";
 
 import { ReactComponent as MapIcon } from "../../assets/icons/map.svg";
 import { ReactComponent as ReservationsIcon } from "../../assets/icons/calendar.svg";
@@ -62,13 +63,7 @@ export default function HeaderComponent() {
           <FavouritesIcon className={styles.mainHeader__actionIcon} />
         </button>
 
-        <button
-          className={styles.mainHeader__action}
-          type="button"
-          aria-label="Профиль"
-        >
-          <UserIcon className={styles.mainHeader__actionIcon} />
-        </button>
+        <ProfileMenu />
       </div>
     </header>
   );

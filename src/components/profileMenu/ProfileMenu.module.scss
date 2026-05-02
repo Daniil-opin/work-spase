@@ -1,0 +1,149 @@
+.profileMenu {
+  position: relative;
+  display: inline-flex;
+}
+
+.profileButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 36px;
+  height: 36px;
+  padding: 0;
+
+  background: transparent;
+  border: none;
+  border-radius: 50%;
+
+  cursor: pointer;
+}
+
+.profileButton:focus-visible {
+  outline: 2px solid #0969da;
+  outline-offset: 2px;
+}
+
+.avatar {
+  width: 32px;
+  height: 32px;
+
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.dropdown {
+  position: absolute;
+  top: calc(100% + 18px);
+  right: 0;
+  z-index: 1000;
+
+  width: 260px;
+  padding: 8px 0;
+
+  color: #24292f;
+  background-color: #ffffff;
+
+  border: 1px solid #d0d7de;
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(140, 149, 159, 0.2);
+}
+
+.user {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  padding: 8px 12px 10px;
+}
+
+.userAvatar {
+  width: 32px;
+  height: 32px;
+
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.userInfo {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.userName {
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+.userFullName {
+  color: #57606a;
+
+  font-size: 12px;
+  line-height: 1.2;
+}
+
+.group {
+  padding: 8px 0;
+  border-top: 1px solid #d8dee4;
+}
+
+.item,
+.signOut {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  width: 100%;
+  min-height: 32px;
+  padding: 6px 12px;
+
+  color: #24292f;
+  background: transparent;
+  border: none;
+
+  font: inherit;
+  font-size: 14px;
+  line-height: 1.3;
+  text-align: left;
+  text-decoration: none;
+
+  cursor: pointer;
+}
+
+.item:hover,
+.signOut:hover {
+  background-color: #f6f8fa;
+}
+
+.itemIcon {
+  flex: 0 0 16px;
+  width: 16px;
+  height: 16px;
+}
+.itemIcon img {
+  width: 18px;
+  height: 18px;
+  display: block;
+}
+
+.itemText {
+  flex: 1;
+}
+
+.badge {
+  padding: 1px 6px;
+
+  color: #0969da;
+
+  font-size: 12px;
+  line-height: 18px;
+
+  border: 1px solid #0969da;
+  border-radius: 999px;
+}
+
+.signOut {
+  border-top: 1px solid #d8dee4;
+}
