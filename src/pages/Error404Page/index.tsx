@@ -1,9 +1,10 @@
-import { ReactComponent as ErrorImage } from "../../assets/image/404.avif.svg";
+import { ReactComponent as ErrorImage } from "../../assets/images/404.avif.svg";
+import { ReactComponent as ArrowImage } from "../../assets/icons/arrow.svg";
+import { Link } from "react-router-dom";
 
-// import { Link } from "react-router-dom";
 import styles from "./index.module.scss";
 
-export function Error404Page() {
+export default function Error404Page() {
   return (
     <main className={styles.main}>
       <div className={styles.main__container}>
@@ -16,12 +17,10 @@ export function Error404Page() {
               <br />
               ужасно не так.
             </h1>
-            {/* <Link className={styles.button} to="/">
-            Вернуться на главную ↗
-            </Link>  */}
-            <a className={styles.button} href="/">
-              Вернуться на главную ↗
-            </a>
+            <Link className={styles.button} to="/">
+              Вернуться на главную
+              <ArrowImage className={styles.button__image} />
+            </Link>
           </section>
 
           <div className={styles.decor} aria-hidden="true">

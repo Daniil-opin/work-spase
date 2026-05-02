@@ -1,0 +1,99 @@
+.mainHeader {
+  position: relative;
+  height: 52px;
+  padding: 0 18px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #ffffff;
+  border-bottom: 1px solid #8f8f8f;
+  box-sizing: border-box;
+
+  &__left {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+
+  &__text {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  &__title {
+    margin: 0;
+    font-size: 16px;
+    line-height: 18px;
+    font-weight: 700;
+    color: #111111;
+  }
+
+  &__pageTitle {
+    margin: 0;
+    font-size: 14px;
+    line-height: 14px;
+    color: #b4b4b4;
+  }
+
+  &__divider {
+    width: 1px;
+    height: 28px;
+
+    background-color: #8f8f8f;
+  }
+
+  &__subtitle {
+    margin: 0;
+    font-size: 11px;
+    line-height: 14px;
+    color: #b4b4b4;
+  }
+
+  &__actions {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+
+  &__action {
+    width: 32px;
+    height: 32px;
+    padding: 0;
+    border: none;
+    background: transparent;
+    color: #6b7280;
+    cursor: pointer;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    transition: color 0.3s ease;
+
+    &:hover {
+      color: #1f41ae;
+    }
+  }
+
+  &__actionIcon {
+    width: 25px;
+    height: 25px;
+    display: block;
+  }
+
+  &__actionIcon_map {
+    width: 21px;
+    height: 21px;
+    display: block;
+  }
+
+  &__logo {
+    display: inline-flex;
+
+    color: inherit;
+    text-decoration: none;
+
+    cursor: pointer;
+  }
+}

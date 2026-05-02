@@ -1,8 +1,8 @@
-import { useState } from 'react';
+import { useState } from "react";
 
-import styles from './LoginPage.module.css';
+import styles from "./LoginPage.module.css";
 
-export function LoginPage() {
+export default function LoginPage() {
   const [remember, setRemember] = useState(false);
 
   return (
