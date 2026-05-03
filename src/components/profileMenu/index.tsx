@@ -1,5 +1,5 @@
 import { ReactComponent as UserIcon } from "../../assets/icons/user.svg";
-
+import { ReactComponent as ExitIcon } from "../../assets/icons/exit.svg";
 import { useEffect, useRef, useState } from "react";
 
 import styles from "./ProfileMenu.module.scss";
@@ -133,18 +133,17 @@ export default function ProfileMenu() {
               ))}
             </div>
           ))}
-
-          <button
-            className={styles.signOut}
-            type="button"
-            role="menuitem"
-            onClick={handleCloseMenu}
-          >
-            <span className={styles.itemIcon}>
-              <img src="/assets/icons/exit.svg" alt="" />
-            </span>
-            <span>Выйти из аккаунта</span>
-          </button>
+          <div className={styles.group_signOut}>
+            <button
+              className={styles.signOut}
+              type="button"
+              role="menuitem"
+              onClick={handleCloseMenu}
+            >
+              <ExitIcon className={styles.itemIcon__signOut} />
+              <span>Выйти из аккаунта</span>
+            </button>
+          </div>
         </div>
       )}
     </div>

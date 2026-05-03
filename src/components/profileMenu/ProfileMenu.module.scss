@@ -12,7 +12,7 @@
   height: 36px;
   padding: 0;
 
-  background: transparent;
+  background-color: transparent;
   border: none;
   border-radius: 50%;
 
@@ -24,12 +24,15 @@
   outline-offset: 2px;
 }
 
+.avatar,
+.userAvatar {
+  border-radius: 50%;
+  object-fit: cover;
+}
+
 .avatar {
   width: 32px;
   height: 32px;
-
-  border-radius: 50%;
-  object-fit: cover;
 }
 
 .dropdown {
@@ -60,9 +63,6 @@
 .userAvatar {
   width: 32px;
   height: 32px;
-
-  border-radius: 50%;
-  object-fit: cover;
 }
 
 .userInfo {
@@ -89,6 +89,11 @@
   border-top: 1px solid #d8dee4;
 }
 
+.group_signOut {
+  padding-top: 4px;
+  border-top: 1px solid #d8dee4;
+}
+
 .item,
 .signOut {
   display: flex;
@@ -100,7 +105,7 @@
   padding: 6px 12px;
 
   color: #24292f;
-  background: transparent;
+  background-color: transparent;
   border: none;
 
   font: inherit;
@@ -110,6 +115,10 @@
   text-decoration: none;
 
   cursor: pointer;
+
+  transition:
+    color 0.3s ease,
+    background-color 0.3s ease;
 }
 
 .item:hover,
@@ -118,14 +127,22 @@
 }
 
 .itemIcon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
   flex: 0 0 16px;
   width: 16px;
   height: 16px;
+
+  color: #6b7280;
 }
+
 .itemIcon img {
+  display: block;
+
   width: 18px;
   height: 18px;
-  display: block;
 }
 
 .itemText {
@@ -145,5 +162,37 @@
 }
 
 .signOut {
-  border-top: 1px solid #d8dee4;
+  gap: 6px;
+  padding: 6px 14px;
+}
+
+.signOut:hover {
+  color: #dc2626;
+}
+
+.signOut span {
+  transition: color 0.3s ease;
+}
+
+.itemIcon__signOut {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  flex: 0 0 18px;
+  width: 18px;
+  height: 18px;
+
+  color: #6b7280;
+
+  transition: color 0.3s ease;
+}
+
+.signOut:hover .itemIcon__signOut {
+  color: #dc2626;
+}
+
+.itemIcon__signOut path {
+  fill: currentColor;
+  stroke: currentColor;
 }

@@ -6,7 +6,6 @@ import ProfileMenu from "../profileMenu/index";
 import { ReactComponent as MapIcon } from "../../assets/icons/map.svg";
 import { ReactComponent as ReservationsIcon } from "../../assets/icons/calendar.svg";
 import { ReactComponent as FavouritesIcon } from "../../assets/icons/star.svg";
-import { ReactComponent as UserIcon } from "../../assets/icons/user.svg";
 
 export default function HeaderComponent() {
   const location = useLocation();
