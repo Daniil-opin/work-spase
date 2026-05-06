@@ -5,6 +5,8 @@ import Error404Page from "../pages/Error404Page/index";
 import MainPage from "../pages/MainPage/index";
 import LoginPage from "../pages/LoginPage/index";
 import HelpPage from "../pages/HelpPage/index";
+import SettingsPage from "../pages/SettingsPage";
+import ReservationPage from "../pages/ReservationPage/index";
 
 function MainLayout() {
   return (
@@ -21,7 +23,8 @@ function App() {
       <Route element={<MainLayout />}>
         <Route path="/" element={<MainPage />} />
         <Route path="/help" element={<HelpPage />} />
-        {/* <Route path="/booking" element={<BookingPage />} /> */}
+        <Route path="/settings" element={<SettingsPage />} />
+        <Route path="/reservations" element={<ReservationPage />} />
       </Route>
 
       <Route path="/login" element={<LoginPage />} />

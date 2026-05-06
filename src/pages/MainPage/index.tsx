@@ -3,7 +3,7 @@ import { ReactComponent as CalendarIcon } from "../../assets/icons/calendar.svg"
 import { ReactComponent as ClockIcon } from "../../assets/icons/clock.svg";
 import { ReactComponent as QrIcon } from "../../assets/icons/qr-code.svg";
 import { ReactComponent as ArrowRightIcon } from "../../assets/icons/arrow_right.svg";
-
+import { useNavigate } from "react-router-dom";
 import styles from "./index.module.scss";
 
 type StatCard = {
@@ -43,6 +43,7 @@ const recentBookings: BookingItem[] = [
 ];
 
 export default function MainPage() {
+  const navigate = useNavigate();
   return (
     <main className={styles.dashboard}>
       <section className={styles.header}>
@@ -135,7 +136,11 @@ export default function MainPage() {
             </p>
           </div>
 
-          <button className={styles.historyButton} type="button">
+          <button
+            className={styles.historyButton}
+            type="button"
+            onClick={() => navigate("/reservations")}
+          >
             <span>Все бронирования</span>
             <ArrowRightIcon className={styles.historyButtonIcon} />
           </button>

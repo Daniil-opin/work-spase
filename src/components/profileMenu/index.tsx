@@ -26,12 +26,12 @@ const menuGroups: MenuItem[][] = [
     },
     {
       label: "Бронирование",
-      href: "/repositories",
+      href: "/reservations",
       Icon: <CalendarIcon />,
     },
     {
       label: "Избранное",
-      href: "/stars",
+      href: "/favourites",
       Icon: <StarIcon />,
     },
   ],

@@ -1,4 +1,4 @@
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 
 import styles from "./index.module.scss";
 import ProfileMenu from "../profileMenu/index";
@@ -21,7 +21,7 @@ export default function HeaderComponent() {
   };
 
   const pageTitle = pageTitleByPath[location.pathname] ?? "Страница";
-
+  const navigate = useNavigate();
   return (
     <header className={styles.mainHeader}>
       <div className={styles.mainHeader__left}>
@@ -42,6 +42,7 @@ export default function HeaderComponent() {
           className={styles.mainHeader__action}
           type="button"
           aria-label="Карта этажей"
+          onClick={() => navigate("/favourites")}
         >
           <MapIcon className={styles.mainHeader__actionIcon_map} />
         </button>
@@ -50,6 +51,7 @@ export default function HeaderComponent() {
           className={styles.mainHeader__action}
           type="button"
           aria-label="Мои бронирования"
+          onClick={() => navigate("/reservations")}
         >
           <ReservationsIcon className={styles.mainHeader__actionIcon} />
         </button>
@@ -58,6 +60,7 @@ export default function HeaderComponent() {
           className={styles.mainHeader__action}
           type="button"
           aria-label="Избранное"
+          onClick={() => navigate("/favourites")}
         >
           <FavouritesIcon className={styles.mainHeader__actionIcon} />
         </button>
