@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 import styles from "./index.module.scss";
 
-export default function Error404Page() {
+export default function HelpPage() {
   return (
     <main className={styles.main}>
       <div className={styles.main__container}>

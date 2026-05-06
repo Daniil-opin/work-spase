@@ -1,6 +1,7 @@
 .dashboard {
   width: 100%;
   max-width: 960px;
+  margin: 0 auto;
   padding: 10px 12px 32px;
 
   color: #111827;
@@ -154,6 +155,13 @@
 .todayHeader {
   display: flex;
   align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.todayBody {
+  display: flex;
+  align-items: flex-end;
   justify-content: space-between;
   gap: 12px;
 }

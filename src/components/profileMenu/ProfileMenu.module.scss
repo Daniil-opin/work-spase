@@ -196,3 +196,14 @@
   fill: currentColor;
   stroke: currentColor;
 }
+
+.itemIcon_randomImg {
+  svg {
+    fill: red;
+
+    path: {
+      fill: red;
+      stroke-color: red;
+    }
+  }
+}

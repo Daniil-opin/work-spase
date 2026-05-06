@@ -4,6 +4,7 @@ import HeaderComponent from "../components/header/index";
 import Error404Page from "../pages/Error404Page/index";
 import MainPage from "../pages/MainPage/index";
 import LoginPage from "../pages/LoginPage/index";
+import HelpPage from "../pages/HelpPage/index";
 
 function MainLayout() {
   return (
@@ -19,6 +20,7 @@ function App() {
     <Routes>
       <Route element={<MainLayout />}>
         <Route path="/" element={<MainPage />} />
+        <Route path="/help" element={<HelpPage />} />
         {/* <Route path="/booking" element={<BookingPage />} /> */}
       </Route>
 

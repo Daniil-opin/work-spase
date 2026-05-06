@@ -1,42 +1,55 @@
 import { ReactComponent as UserIcon } from "../../assets/icons/user.svg";
 import { ReactComponent as ExitIcon } from "../../assets/icons/exit.svg";
-import { useEffect, useRef, useState } from "react";
-
+import { JSX, useEffect, useRef, useState } from "react";
+import { Link } from "react-router-dom";
 import styles from "./ProfileMenu.module.scss";
 import style from "../header/index.module.scss";
-const menuGroups = [
+import { CalendarIcon } from "../Icons";
+import { ProfileIcon } from "../Icons";
+import { StarIcon } from "../Icons";
+import { SettingsIcon } from "../Icons";
+import { TopicIcon } from "../Icons";
+import { HelpIcon } from "../Icons";
+
+interface MenuItem {
+  label: string;
+  href: string;
+  Icon: JSX.Element;
+}
+
+const menuGroups: MenuItem[][] = [
   [
     {
       label: "Профиль",
       href: "/profile",
-      icon: "../../assets/icons/user.svg",
+      Icon: <ProfileIcon />,
     },
     {
       label: "Бронирование",
       href: "/repositories",
-      icon: "/assets/icons/calendar.svg",
+      Icon: <CalendarIcon />,
     },
     {
       label: "Избранное",
       href: "/stars",
-      icon: "../../assets/icons/star.svg",
+      Icon: <StarIcon />,
     },
   ],
   [
     {
       label: "Настройки",
       href: "/settings",
-      icon: "../../assets/icons/settings.svg",
+      Icon: <SettingsIcon />,
     },
     {
       label: "Темы",
-      href: "/copilot",
-      icon: "../../assets/icons/topic.svg",
+      href: "/topic",
+      Icon: <TopicIcon />,
     },
     {
       label: "Помощь",
-      href: "/features",
-      icon: "../../assets/icons/help.svg",
+      href: "/help",
+      Icon: <HelpIcon />,
     },
     // { label: "Помощь", href: "/features", badge: "New" },
   ],
@@ -113,23 +126,17 @@ export default function ProfileMenu() {
 
           {menuGroups.map((group, groupIndex) => (
             <div className={styles.group} key={groupIndex}>
-              {group.map((item) => (
-                <a
-                  key={item.label}
+              {group.map(({ href, label, Icon }) => (
+                <Link
                   className={styles.item}
-                  href={item.href}
+                  to={href}
+                  key={label}
                   role="menuitem"
                   onClick={handleCloseMenu}
                 >
-                  <span className={styles.itemIcon}>
-                    <img src={item.icon} alt="" />
-                  </span>
-                  <span className={styles.itemText}>{item.label}</span>
-
-                  {/* {item.badge && (
-                    <span className={styles.badge}>{item.badge}</span>
-                  )} */}
-                </a>
+                  <span className={styles.itemIcon}>{Icon}</span>
+                  <span className={styles.itemText}>{label}</span>
+                </Link>
               ))}
             </div>
           ))}

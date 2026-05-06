@@ -45,10 +45,10 @@ const recentBookings: BookingItem[] = [
 export default function MainPage() {
   return (
     <main className={styles.dashboard}>
-      <header className={styles.header}>
+      <section className={styles.header}>
         <h1 className={styles.title}>Добро пожаловать, Даниил Дмитриевич!</h1>
         <p className={styles.date}>вторник, 28 апреля 2026</p>
-      </header>
+      </section>
 
       <section className={styles.quickActions} aria-label="Быстрые действия">
         <article className={styles.actionCard}>
@@ -95,24 +95,24 @@ export default function MainPage() {
 
             <span className={styles.statusBadge}>Подтверждено</span>
           </div>
+          <div className={styles.todayBody}>
+            <div className={styles.bookingInfo}>
+              <div className={styles.bookingRow}>
+                <LocationIcon className={styles.infoIcon} />
+                <span className={styles.bookingPlace}>Рабочее место 1.02</span>
+              </div>
 
-          <div className={styles.bookingInfo}>
-            <div className={styles.bookingRow}>
-              <LocationIcon className={styles.infoIcon} />
-              <span className={styles.bookingPlace}>Рабочее место 1.02</span>
+              <div className={styles.bookingRow}>
+                <ClockIcon className={styles.infoIcon} />
+                <span>9:00 – 18:00</span>
+              </div>
             </div>
-
-            <div className={styles.bookingRow}>
-              <ClockIcon className={styles.infoIcon} />
-              <span>9:00 – 18:00</span>
-            </div>
+            <button className={styles.checkInButton} type="button">
+              <QrIcon className={styles.checkInIcon} />
+              <span>Чек-ин</span>
+            </button>
           </div>
         </div>
-
-        <button className={styles.checkInButton} type="button">
-          <QrIcon className={styles.checkInIcon} />
-          <span>Чек-ин</span>
-        </button>
       </section>
 
       <section className={styles.stats} aria-label="Статистика">
