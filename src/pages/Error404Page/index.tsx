@@ -1,10 +1,10 @@
 import { ReactComponent as ErrorImage } from "../../assets/images/404.avif.svg";
 import { ReactComponent as ArrowImage } from "../../assets/icons/arrow.svg";
-import { Link } from "react-router-dom";
+import { Link } from "react-router";
 
 import styles from "./index.module.scss";
 
-export default function HelpPage() {
+export default function Error404Page() {
   return (
     <main className={styles.main}>
       <div className={styles.main__container}>

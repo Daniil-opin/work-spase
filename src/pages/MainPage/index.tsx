@@ -3,7 +3,7 @@ import { ReactComponent as CalendarIcon } from "../../assets/icons/calendar.svg"
 import { ReactComponent as ClockIcon } from "../../assets/icons/clock.svg";
 import { ReactComponent as QrIcon } from "../../assets/icons/qr-code.svg";
 import { ReactComponent as ArrowRightIcon } from "../../assets/icons/arrow_right.svg";
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router";
 import styles from "./index.module.scss";
 
 type StatCard = {

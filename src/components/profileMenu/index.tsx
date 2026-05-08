@@ -1,7 +1,7 @@
 import { ReactComponent as UserIcon } from "../../assets/icons/user.svg";
 import { ReactComponent as ExitIcon } from "../../assets/icons/exit.svg";
 import { JSX, useEffect, useRef, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link } from "react-router";
 import styles from "./ProfileMenu.module.scss";
 import style from "../header/index.module.scss";
 import { CalendarIcon } from "../Icons";

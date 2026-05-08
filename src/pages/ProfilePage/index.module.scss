@@ -1,0 +1,280 @@
+.page {
+  width: 100%;
+  max-width: 940px;
+  padding: 16px 0 48px;
+  color: #111827;
+}
+
+.title {
+  margin: 0 0 24px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid #bfc3ca;
+  font-size: 24px;
+  line-height: 1.2;
+  font-weight: 500;
+  color: #111827;
+}
+
+.form {
+  display: grid;
+  grid-template-columns: minmax(0, 480px) 260px;
+  align-items: start;
+  gap: 96px;
+}
+
+.mainColumn {
+  width: 100%;
+}
+
+.fieldGroup {
+  width: 100%;
+  margin-bottom: 24px;
+}
+
+.label {
+  display: block;
+  margin-bottom: 6px;
+  font-size: 13px;
+  line-height: 1.2;
+  font-weight: 600;
+  color: #111827;
+}
+
+.inputRow {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 28px;
+  align-items: center;
+  gap: 8px;
+}
+
+.input,
+.select,
+.shortSelect,
+.textarea,
+.socialInput {
+  width: 100%;
+  border: 1px solid #cfd6df;
+  border-radius: 4px;
+  background-color: #f8fafc;
+  color: #111827;
+  font-family: inherit;
+  font-size: 13px;
+  outline: none;
+  transition:
+    border-color 0.2s ease,
+    background-color 0.2s ease;
+
+  &:focus {
+    border-color: #8b95a5;
+    background-color: #ffffff;
+  }
+}
+
+.input,
+.select,
+.shortSelect {
+  height: 36px;
+  padding: 0 10px;
+}
+
+.textarea {
+  min-height: 116px;
+  padding: 10px;
+  resize: vertical;
+}
+
+.select,
+.shortSelect {
+  appearance: auto;
+}
+
+.shortSelect {
+  max-width: 210px;
+}
+
+.helperText {
+  margin: 5px 0 0;
+  font-size: 10px;
+  line-height: 1.35;
+  color: #9aa1ad;
+
+  a {
+    color: #3b82f6;
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}
+
+.iconButton {
+  width: 28px;
+  height: 28px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  border: none;
+  background-color: transparent;
+  color: #111827;
+  cursor: pointer;
+
+  svg {
+    width: 18px;
+    height: 18px;
+    display: block;
+  }
+
+  &:hover {
+    color: #374151;
+  }
+}
+
+.emailRow {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.deleteButton {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 0;
+  border: none;
+  background-color: transparent;
+  color: #6b7280;
+  font-family: inherit;
+  font-size: 13px;
+  cursor: pointer;
+
+  svg {
+    width: 16px;
+    height: 16px;
+    display: block;
+  }
+
+  &:hover {
+    color: #ef4444;
+  }
+}
+
+.socialRow {
+  display: grid;
+  grid-template-columns: 22px minmax(0, 1fr);
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 6px;
+  color: #111827;
+
+  svg {
+    width: 16px;
+    height: 16px;
+    display: block;
+    justify-self: center;
+  }
+}
+
+.socialInput {
+  height: 32px;
+  padding: 0 10px;
+
+  &::placeholder {
+    color: #8d96a3;
+  }
+}
+
+.avatarColumn {
+  padding-top: 2px;
+}
+
+.avatarTitle {
+  margin-bottom: 18px;
+  font-size: 13px;
+  line-height: 1.2;
+  font-weight: 600;
+  color: #111827;
+}
+
+.avatarWrapper {
+  width: 230px;
+  height: 230px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  color: #9ca0a6;
+  background-color: #d9dde2;
+
+  svg {
+    width: 150px;
+    height: 150px;
+    display: block;
+  }
+}
+
+.editAvatarButton {
+  position: relative;
+  margin-top: -32px;
+  margin-left: 6px;
+  min-height: 28px;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 4px 8px;
+  border: 1px solid #9ca3af;
+  border-radius: 3px;
+  background-color: #ffffff;
+  color: #111827;
+  font-family: inherit;
+  font-size: 11px;
+  cursor: pointer;
+
+  svg {
+    width: 13px;
+    height: 13px;
+    display: block;
+  }
+
+  &:hover {
+    background-color: #f3f4f6;
+  }
+}
+
+@media (max-width: 900px) {
+  .form {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+
+  .avatarColumn {
+    order: -1;
+  }
+}
+
+@media (max-width: 520px) {
+  .page {
+    padding: 16px;
+  }
+
+  .title {
+    font-size: 22px;
+  }
+
+  .emailRow {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .avatarWrapper {
+    width: 180px;
+    height: 180px;
+
+    svg {
+      width: 120px;
+      height: 120px;
+    }
+  }
+}

@@ -1,4 +1,4 @@
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router";
 
 import styles from "./index.module.scss";
 import ProfileMenu from "../profileMenu/index";
