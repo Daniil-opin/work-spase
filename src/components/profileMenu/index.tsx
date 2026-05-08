@@ -21,7 +21,7 @@ const menuGroups: MenuItem[][] = [
   [
     {
       label: "Профиль",
-      href: "/profile",
+      href: "settings/profile",
       Icon: <ProfileIcon />,
     },
     {
@@ -43,7 +43,7 @@ const menuGroups: MenuItem[][] = [
     },
     {
       label: "Темы",
-      href: "/topic",
+      href: "settings/topic",
       Icon: <TopicIcon />,
     },
     {

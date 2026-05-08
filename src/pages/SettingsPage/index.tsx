@@ -33,7 +33,7 @@ const mainLinks: SettingsLink[] = [
   },
   {
     label: "Внешний вид",
-    path: "/settings/appearance",
+    path: "/settings/topic",
     icon: <MonitorIcon />,
   },
   {
@@ -72,11 +72,13 @@ export default function SettingsSidebar() {
     <div className={styles.settingsPage}>
       <aside className={styles.sidebar}>
         <div className={styles.profile}>
-          <img
-            className={styles.avatar}
-            src="/images/avatar.jpg"
-            alt="Аватар пользователя"
-          />
+          <div className={styles.avatarWrapper}>
+            <img
+              className={styles.avatarImage}
+              src="/images/avatar.jpg"
+              alt="Аватар пользователя"
+            />
+          </div>
 
           <div className={styles.profileInfo}>
             <div className={styles.profileName}>

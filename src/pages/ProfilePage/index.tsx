@@ -177,7 +177,11 @@ export default function PublicProfilePage() {
           <div className={styles.avatarTitle}>Изображение профиля</div>
 
           <div className={styles.avatarWrapper}>
-            <UserIcon />
+            <img
+              className={styles.avatarImage}
+              src="/images/avatar.jpg"
+              alt="Аватар пользователя"
+            />
           </div>
 
           <button className={styles.editAvatarButton} type="button">
