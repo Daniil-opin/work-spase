@@ -1,0 +1,609 @@
+.page {
+  width: 100%;
+  max-width: 960px;
+  padding: 16px 0 48px;
+  color: #111827;
+}
+
+.title {
+  margin: 0 0 24px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid #bfc3ca;
+  font-size: 24px;
+  line-height: 1.2;
+  font-weight: 500;
+  color: #111827;
+}
+
+.description {
+  max-width: 900px;
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.45;
+  color: #6b7280;
+}
+
+.historyToolBar {
+  display: flex;
+  justify-content: space-between;
+
+  margin-bottom: 20px;
+}
+
+.filterSelect {
+  position: relative;
+  width: 180px;
+}
+
+.filterButton {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+
+  width: 100%;
+  height: 42px;
+  padding: 0 12px;
+
+  color: #111827;
+  background-color: #f4f4f6;
+
+  font-size: 14px;
+  font-weight: 700;
+
+  border: none;
+  border-radius: 8px;
+  outline: none;
+
+  cursor: pointer;
+}
+
+.filterButton:hover {
+  background-color: #eeeef1;
+}
+
+.filterArrow {
+  width: 16px;
+  height: 16px;
+
+  color: #9ca3af;
+
+  transition: transform 0.2s ease;
+}
+
+.filterArrow path {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.filterArrowOpen {
+  transform: rotate(180deg);
+}
+
+.filterDropdown {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  z-index: 20;
+
+  width: 100%;
+  padding: 4px;
+
+  background-color: #ffffff;
+
+  border: 1px solid #d7dce3;
+  border-radius: 6px;
+  box-shadow: 0 8px 18px rgb(15 23 42 / 12%);
+}
+
+.filterOption {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+
+  width: 100%;
+  min-height: 32px;
+  padding: 0 8px;
+
+  color: #111827;
+  background-color: transparent;
+
+  font-size: 14px;
+  font-weight: 500;
+  text-align: left;
+
+  border: none;
+  border-radius: 4px;
+
+  cursor: pointer;
+}
+
+.filterOption:hover {
+  background-color: #f3f4f6;
+}
+
+.filterOptionSelected {
+  background-color: #e5e7eb;
+}
+
+.checkIcon {
+  width: 16px;
+  height: 16px;
+
+  color: #9ca3af;
+}
+
+.checkIcon path {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+@media (max-width: 760px) {
+  .filterSelect {
+    width: 100%;
+  }
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.card {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 24px;
+
+  min-height: 120px;
+  padding: 20px 32px;
+
+  background-color: #ffffff;
+
+  border: 1px solid #e5e7eb;
+  border-radius: 14px;
+  box-shadow: 0 1px 2px rgb(15 23 42 / 3%);
+}
+
+.cardInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.cardHeader {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.place {
+  margin: 0;
+
+  color: #020617;
+
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.status {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  min-height: 20px;
+  padding: 0 6px;
+
+  color: #ffffff;
+
+  font-size: 11px;
+  font-weight: 700;
+
+  border-radius: 8px;
+}
+
+.confirmed {
+  background-color: #35b36a;
+}
+
+.checkedIn {
+  background-color: #2563eb;
+}
+
+.completed {
+  background-color: #6b7280;
+}
+
+.cancelled {
+  background-color: #ef4444;
+}
+
+.meta {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.metaItem {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  color: #7b8190;
+
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.metaItem svg {
+  width: 15px;
+  height: 15px;
+
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.checkInButton,
+.guestButton,
+.deleteButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  height: 40px;
+
+  font-size: 14px;
+  font-weight: 700;
+
+  border-radius: 8px;
+
+  cursor: pointer;
+}
+
+.checkInButton,
+.guestButton {
+  gap: 10px;
+
+  padding: 0 16px;
+}
+
+.checkInButton {
+  color: #ffffff;
+  background-color: #2948bf;
+
+  border: 1px solid #2948bf;
+  transition:
+    background-color 0.3s ease,
+    border-color 0.3s ease;
+
+  &:hover {
+    background-color: #213ca3;
+    border-color: #213ca3;
+  }
+}
+
+.guestButton {
+  color: #111827;
+  background-color: #ffffff;
+
+  border: 1px solid #e5e7eb;
+  transition: background-color 0.3s ease;
+
+  &:hover {
+    background-color: #f5f5f5;
+  }
+}
+
+.deleteButton {
+  width: 40px;
+
+  color: #ef4444;
+  background-color: transparent;
+
+  border: none;
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease;
+
+  &:hover {
+    color: #f32929;
+    background-color: #f5f5f5;
+  }
+}
+
+.checkInButton svg,
+.guestButton svg,
+.deleteButton svg {
+  width: 18px;
+  height: 18px;
+
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  min-height: 170px;
+  padding: 32px;
+
+  text-align: center;
+
+  background-color: #ffffff;
+
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+}
+
+.empty svg {
+  width: 50px;
+  height: 50px;
+  margin-bottom: 18px;
+
+  color: #7b8190;
+
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 0.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.empty h2 {
+  margin: 0 0 8px;
+
+  color: #111827;
+
+  font-size: 17px;
+  font-weight: 700;
+}
+
+.empty p {
+  margin: 0;
+
+  color: #7b8190;
+
+  font-size: 14px;
+}
+
+@media (max-width: 760px) {
+  .page {
+    padding: 20px;
+  }
+
+  .header {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .select {
+    width: 100%;
+  }
+
+  .card {
+    flex-direction: column;
+    padding: 24px;
+  }
+
+  .actions {
+    width: 100%;
+    flex-wrap: wrap;
+  }
+
+  .checkInButton,
+  .guestButton {
+    flex: 1;
+  }
+}
+.modalOverlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 20px;
+
+  background-color: rgb(15 23 42 / 45%);
+}
+
+.modal {
+  position: relative;
+
+  width: 100%;
+  max-width: 430px;
+  padding: 24px;
+
+  background-color: #ffffff;
+
+  border-radius: 12px;
+  box-shadow: 0 20px 50px rgb(15 23 42 / 22%);
+}
+
+.modalCloseButton {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 28px;
+  height: 28px;
+  padding: 0;
+
+  color: #6b7280;
+  background-color: transparent;
+
+  font-size: 24px;
+  line-height: 1;
+
+  border: none;
+  border-radius: 6px;
+
+  cursor: pointer;
+
+  transition:
+    color 0.2s ease,
+    background-color 0.2s ease;
+}
+
+.modalCloseButton:hover {
+  color: #111827;
+  background-color: #f3f4f6;
+}
+
+.modalTitle {
+  margin: 0 32px 6px 0;
+
+  color: #111827;
+
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.modalDescription {
+  margin: 0 0 20px;
+
+  color: #7b8190;
+
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+.modalField {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+
+  margin-bottom: 16px;
+}
+
+.modalField span {
+  color: #111827;
+
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.modalField input {
+  width: 100%;
+  height: 42px;
+  padding: 0 12px;
+
+  color: #111827;
+  background-color: #f3f4f6;
+
+  font-size: 14px;
+
+  border: 1px solid transparent;
+  border-radius: 8px;
+  outline: none;
+
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.modalField input::placeholder {
+  color: #9ca3af;
+}
+
+.modalField input:focus {
+  background-color: #ffffff;
+  border-color: #9ca3af;
+  box-shadow: 0 0 0 3px rgb(156 163 175 / 22%);
+}
+
+.modalActions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+
+  margin-top: 20px;
+}
+
+.modalSubmitButton,
+.modalCancelButton {
+  height: 40px;
+
+  font-size: 14px;
+  font-weight: 700;
+
+  border-radius: 8px;
+
+  cursor: pointer;
+
+  transition:
+    color 0.2s ease,
+    background-color 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.modalSubmitButton {
+  color: #ffffff;
+  background-color: #2948bf;
+
+  border: 1px solid #8f8d96;
+}
+
+.modalSubmitButton:hover:not(:disabled) {
+  background-color: #213ca3;
+  border-color: #77757f;
+}
+
+.modalSubmitButton:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.modalCancelButton {
+  color: #111827;
+  background-color: #ffffff;
+
+  border: 1px solid #e5e7eb;
+}
+
+.modalCancelButton:hover {
+  background-color: #f9fafb;
+  border-color: #d1d5db;
+}
+
+@media (max-width: 520px) {
+  .modal {
+    padding: 20px;
+  }
+
+  .modalActions {
+    grid-template-columns: 1fr;
+  }
+}

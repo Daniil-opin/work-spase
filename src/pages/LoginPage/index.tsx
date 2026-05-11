@@ -1,14 +1,57 @@
-import { useState } from "react";
+import { type SyntheticEvent, useState } from "react";
 
 import styles from "./LoginPage.module.css";
 
 export default function LoginPage() {
+  const [username, setUserName] = useState("");
+  const [password, setPassword] = useState("");
   const [remember, setRemember] = useState(false);
+
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState("");
+
+  async function handleSubmit(event: SyntheticEvent<HTMLFormElement>) {
+    event.preventDefault();
+
+    setError("");
+    setIsLoading(true);
+
+    try {
+      const response = await fetch("http://localhost:8080/api/auth/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          username: username.trim(),
+          password,
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error("Неверный email или пароль");
+      }
+
+      const data: { token: string } = await response.json();
+
+      localStorage.setItem("accessToken", data.token);
+
+      window.location.href = "/";
+    } catch (error) {
+      if (error instanceof Error) {
+        setError(error.message);
+      } else {
+        setError("Произошла неизвестная ошибка");
+      }
+    } finally {
+      setIsLoading(false);
+    }
+  }
 
   return (
     <main className={styles.loginPage}>
       <section className={styles.loginLeft} aria-label="Форма входа">
-        <form className={styles.loginForm}>
+        <form className={styles.loginForm} onSubmit={handleSubmit}>
           <div className={styles.loginHeader}>
             <h1>Welcome Back</h1>
             <p className={styles.subtitle}>Hi there! Welcome to WorkSpace</p>
@@ -23,6 +66,9 @@ export default function LoginPage() {
               type="email"
               placeholder="Email Address"
               autoComplete="email"
+              value={username}
+              onChange={(event) => setUserName(event.target.value)}
+              required
             />
             <UserIcon />
           </label>
@@ -33,6 +79,9 @@ export default function LoginPage() {
               type="password"
               placeholder="Password"
               autoComplete="current-password"
+              value={password}
+              onChange={(event) => setPassword(event.target.value)}
+              required
             />
             <KeyIcon />
           </label>
@@ -50,8 +99,14 @@ export default function LoginPage() {
             <a href="#forgot">Forgot Password ?</a>
           </div>
 
-          <button type="submit" className={styles.signInButton}>
-            Sign In
+          {error && <p className={styles.errorText}>{error}</p>}
+
+          <button
+            type="submit"
+            className={styles.signInButton}
+            disabled={isLoading}
+          >
+            {isLoading ? "Signing In..." : "Sign In"}
           </button>
 
           <p className={styles.guestText}>

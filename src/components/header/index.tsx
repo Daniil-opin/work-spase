@@ -47,7 +47,7 @@ export default function HeaderComponent() {
           className={styles.mainHeader__action}
           type="button"
           aria-label="Карта этажей"
-          onClick={() => navigate("/favourites")}
+          onClick={() => navigate("/map")}
         >
           <MapIcon className={styles.mainHeader__actionIcon_map} />
         </button>
