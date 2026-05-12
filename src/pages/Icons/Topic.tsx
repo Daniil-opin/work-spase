@@ -1,6 +1,6 @@
 import { SVGProps } from "react";
 
-export function MonitorIcon(props: SVGProps<SVGSVGElement>) {
+export function MonitorsIcon(props: SVGProps<SVGSVGElement>) {
   return (
     <svg
       width="31"

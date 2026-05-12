@@ -1,5 +1,12 @@
 import { ChangeEvent, useMemo, useState } from "react";
 
+import {
+  SearchIcon,
+  MonitorIcon,
+  MapIcon,
+  ClockMapIcon,
+  FilterIcon,
+} from "../Icons";
 import styles from "./index.module.scss";
 
 type ViewMode = "map" | "list";
@@ -43,6 +50,7 @@ const capacityOptions = [
   { value: "2", label: "2 человека" },
   { value: "4", label: "4 человека" },
   { value: "8", label: "8 человек" },
+  { value: "12", label: "12 человек" },
 ];
 
 export default function ResourcesPage() {
@@ -137,7 +145,7 @@ export default function ResourcesPage() {
                     onChange={handleFilterChange}
                     type="time"
                   />
-                  <ClockIcon />
+                  <ClockMapIcon />
                 </label>
 
                 <label className={styles.timeField}>
@@ -147,7 +155,7 @@ export default function ResourcesPage() {
                     onChange={handleFilterChange}
                     type="time"
                   />
-                  <ClockIcon />
+                  <ClockMapIcon />
                 </label>
               </div>
             </div>
@@ -239,33 +247,6 @@ function SelectField<T extends string>({
   );
 }
 
-function SearchIcon() {
-  return (
-    <svg viewBox="0 0 24 24" fill="none">
-      <circle cx="11" cy="11" r="7" stroke="currentColor" strokeWidth="2" />
-      <path
-        d="M16.5 16.5L21 21"
-        stroke="currentColor"
-        strokeWidth="2"
-        strokeLinecap="round"
-      />
-    </svg>
-  );
-}
-
-function FilterIcon() {
-  return (
-    <svg viewBox="0 0 24 24" fill="none">
-      <path
-        d="M4 5H20L14 12V18L10 20V12L4 5Z"
-        stroke="currentColor"
-        strokeWidth="2"
-        strokeLinejoin="round"
-      />
-    </svg>
-  );
-}
-
 function ChevronIcon() {
   return (
     <svg viewBox="0 0 24 24" fill="none">
@@ -275,61 +256,6 @@ function ChevronIcon() {
         strokeWidth="2"
         strokeLinecap="round"
         strokeLinejoin="round"
-      />
-    </svg>
-  );
-}
-
-function ClockIcon() {
-  return (
-    <svg viewBox="0 0 24 24" fill="none">
-      <circle cx="12" cy="12" r="8" stroke="currentColor" strokeWidth="2" />
-      <path
-        d="M12 8V12L15 14"
-        stroke="currentColor"
-        strokeWidth="2"
-        strokeLinecap="round"
-      />
-    </svg>
-  );
-}
-
-function MapIcon() {
-  return (
-    <svg viewBox="0 0 24 24" fill="none">
-      <path
-        d="M12 21C12 21 6 15.7 6 10C6 6.7 8.7 4 12 4C15.3 4 18 6.7 18 10C18 15.7 12 21 12 21Z"
-        stroke="currentColor"
-        strokeWidth="2"
-      />
-      <circle cx="12" cy="10" r="2.5" stroke="currentColor" strokeWidth="2" />
-    </svg>
-  );
-}
-
-function MonitorIcon() {
-  return (
-    <svg viewBox="0 0 24 24" fill="none">
-      <rect
-        x="4"
-        y="5"
-        width="16"
-        height="11"
-        rx="2"
-        stroke="currentColor"
-        strokeWidth="2"
-      />
-      <path
-        d="M8 20H16"
-        stroke="currentColor"
-        strokeWidth="2"
-        strokeLinecap="round"
-      />
-      <path
-        d="M12 16V20"
-        stroke="currentColor"
-        strokeWidth="2"
-        strokeLinecap="round"
       />
     </svg>
   );

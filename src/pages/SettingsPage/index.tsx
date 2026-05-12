@@ -10,7 +10,7 @@ import {
   EyeIcon,
   HistoryIcon,
   LogoutIcon,
-  MonitorIcon,
+  MonitorsIcon,
   ProfileIcon,
 } from "../Icons";
 
@@ -34,7 +34,7 @@ const mainLinks: SettingsLink[] = [
   {
     label: "Внешний вид",
     path: "/settings/topic",
-    icon: <MonitorIcon />,
+    icon: <MonitorsIcon />,
   },
   {
     label: "Уведомления",
