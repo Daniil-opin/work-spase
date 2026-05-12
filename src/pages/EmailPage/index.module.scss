@@ -1,0 +1,522 @@
+.page {
+  width: 100%;
+  max-width: 940px;
+  padding: 16px 0 48px;
+  color: #111827;
+}
+
+.title {
+  margin: 0 0 24px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid #bfc3ca;
+  font-size: 24px;
+  line-height: 1.2;
+  font-weight: 500;
+  color: #111827;
+}
+
+.form {
+  display: grid;
+  grid-template-columns: minmax(0, 480px) 150px;
+
+  gap: 30px;
+}
+
+.emailSection {
+  width: 100%;
+  max-width: 680px;
+}
+
+.header {
+  margin-bottom: 28px;
+}
+
+.description {
+  max-width: 620px;
+  margin: 0;
+
+  color: #020617;
+  font-size: 14px;
+  line-height: 1.45;
+  margin-bottom: 15px;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid #bfc3ca;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.label {
+  color: #334155;
+  font-size: 17px;
+  font-weight: 500;
+}
+
+.emailRow,
+.codeRow {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) max-content;
+  gap: 10px;
+  align-items: center;
+}
+
+.input {
+  width: 100%;
+  height: 38px;
+  padding: 0 12px;
+
+  border: 1px solid #c9ced8;
+  border-radius: 6px;
+  outline: none;
+
+  background-color: #ffffff;
+  color: #020617;
+
+  font-family: inherit;
+  font-size: 14px;
+
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+
+  &::placeholder {
+    color: #94a3b8;
+  }
+
+  &:focus {
+    border-color: #2563eb;
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.14);
+  }
+}
+
+.primaryButton,
+.secondaryButton {
+  height: 38px;
+  padding: 0 16px;
+
+  border: none;
+  border-radius: 6px;
+
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition:
+    background-color 0.2s ease,
+    opacity 0.2s ease;
+
+  &:disabled {
+    cursor: not-allowed;
+    opacity: 0.55;
+  }
+}
+
+.primaryButton {
+  background-color: #16732f;
+  color: #ffffff;
+
+  &:not(:disabled):hover {
+    background-color: #125f28;
+  }
+}
+
+.secondaryButton {
+  background-color: #e2e8f0;
+  color: #0f172a;
+
+  &:not(:disabled):hover {
+    background-color: #cbd5e1;
+  }
+}
+
+.successMessage,
+.errorMessage {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+.successMessage {
+  color: #16732f;
+}
+
+.errorMessage {
+  color: #dc2626;
+}
+
+@media (max-width: 640px) {
+  .emailRow,
+  .codeRow {
+    grid-template-columns: 1fr;
+  }
+
+  .primaryButton,
+  .secondaryButton {
+    width: 100%;
+  }
+}
+
+.modalOverlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 20px;
+
+  background-color: rgba(15, 23, 42, 0.45);
+}
+
+.modal {
+  width: 100%;
+  max-width: 460px;
+  padding: 22px;
+
+  border-radius: 12px;
+  background-color: #ffffff;
+  box-shadow: 0 20px 48px rgba(15, 23, 42, 0.22);
+}
+
+.modalHeader {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+
+  margin-bottom: 20px;
+}
+
+.modalTitle {
+  margin: 0 0 8px;
+
+  color: #020617;
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.modalDescription {
+  margin: 0;
+
+  color: #475569;
+  font-size: 14px;
+  line-height: 1.45;
+}
+
+.closeButton {
+  width: 32px;
+  height: 32px;
+
+  border: none;
+  border-radius: 8px;
+
+  background-color: transparent;
+  color: #64748b;
+
+  font-size: 24px;
+  line-height: 1;
+
+  cursor: pointer;
+
+  &:hover {
+    background-color: #f1f5f9;
+    color: #020617;
+  }
+}
+
+.modalActions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+
+  margin-top: 22px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.label {
+  color: #334155;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.input {
+  width: 100%;
+  height: 40px;
+  padding: 0 12px;
+
+  border: 1px solid #c9ced8;
+  border-radius: 6px;
+  outline: none;
+
+  background-color: #ffffff;
+  color: #020617;
+
+  font-family: inherit;
+  font-size: 14px;
+
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+
+  &::placeholder {
+    color: #94a3b8;
+  }
+
+  &:focus {
+    border-color: #2563eb;
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.14);
+  }
+}
+
+.primaryButton,
+.secondaryButton {
+  height: 38px;
+  padding: 0 16px;
+
+  border: none;
+  border-radius: 6px;
+
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition:
+    background-color 0.2s ease,
+    opacity 0.2s ease;
+
+  &:disabled {
+    cursor: not-allowed;
+    opacity: 0.55;
+  }
+}
+
+.primaryButton {
+  background-color: #16732f;
+  color: #ffffff;
+
+  &:not(:disabled):hover {
+    background-color: #125f28;
+  }
+}
+
+.secondaryButton {
+  background-color: #e2e8f0;
+  color: #0f172a;
+
+  &:not(:disabled):hover {
+    background-color: #cbd5e1;
+  }
+}
+
+.successMessage,
+.errorMessage {
+  margin: 0;
+
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+.successMessage {
+  color: #16732f;
+}
+
+.errorMessage {
+  color: #dc2626;
+}
+
+.titleSection {
+  margin: 15px 0 10px;
+
+  font-size: 24px;
+  line-height: 1.2;
+  font-weight: 500;
+  color: #111827;
+}
+
+.card {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  align-items: center;
+  gap: 24px;
+
+  min-height: 50px;
+  padding: 10px 32px;
+
+  background-color: #ffffff;
+
+  border: 1px solid #e5e7eb;
+  border-radius: 14px;
+  box-shadow: 0 1px 2px rgb(15 23 42 / 3%);
+}
+
+.cardHeader {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.place {
+  margin: 0;
+
+  color: #020617;
+
+  font-size: 15px;
+  font-weight: 500;
+  line-height: 1.2;
+}
+
+.deleteButton {
+  width: 30px;
+  cursor: pointer;
+  padding-top: 6px;
+  padding-bottom: 3px;
+  color: #ef4444;
+  background-color: transparent;
+  border-radius: 5px;
+
+  border: none;
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease;
+
+  &:hover {
+    color: #f32929;
+    background-color: #f5f5f5;
+  }
+}
+
+.deleteButton svg {
+  width: 18px;
+  height: 18px;
+
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.basicEmailButton svg {
+  width: 20px;
+  height: 20px;
+
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.publicEmailButton svg {
+  width: 20px;
+  height: 20px;
+
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.basicEmailButton {
+  width: 30px;
+  cursor: pointer;
+  padding-top: 6px;
+  padding-bottom: 3px;
+  color: #288d52;
+  background-color: transparent;
+  border-radius: 5px;
+
+  border: none;
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease;
+
+  &:hover {
+    color: #227b47;
+    background-color: #f5f5f5;
+  }
+}
+
+.publicEmailButton {
+  width: 30px;
+  cursor: pointer;
+  padding-top: 6px;
+  padding-bottom: 3px;
+  color: #1f41ae;
+  background-color: transparent;
+  border-radius: 5px;
+
+  border: none;
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease;
+
+  &:hover {
+    color: #1f41ae;
+    background-color: #f5f5f5;
+  }
+}
+
+.cardActions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  flex-shrink: 0;
+}
+
+.status {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  min-height: 20px;
+  padding: 0 6px;
+
+  color: #ffffff;
+
+  font-size: 11px;
+  font-weight: 700;
+
+  border-radius: 8px;
+}
+
+.basic {
+  background-color: #35b36a;
+}
+
+.public {
+  background-color: #2563eb;
+}
+
+.emailList {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.emptyText {
+  margin: 0;
+
+  color: #64748b;
+
+  font-size: 14px;
+  line-height: 1.4;
+}

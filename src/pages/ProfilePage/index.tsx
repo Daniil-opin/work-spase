@@ -1,33 +1,88 @@
-import { ChangeEvent, FormEvent, useState } from "react";
+import {
+  type ChangeEvent,
+  type SyntheticEvent,
+  useEffect,
+  useState,
+} from "react";
 
 import styles from "./index.module.scss";
 
 type ProfileForm = {
   fullName: string;
-  position: string;
-  department: string;
-  publicEmail: string;
+  nickname: string;
+  avatarPath: string;
   bio: string;
-  pronouns: string;
-  socialLink1: string;
-  socialLink2: string;
-  socialLink3: string;
+  pronoun: {
+    value: string;
+    label: string;
+  };
+  departmentPosition: {
+    positionName: string;
+    departmentName: string;
+  };
+  publicEmail: string;
 };
 
 const initialForm: ProfileForm = {
   fullName: "Якименко Никита Дмитриевич",
-  position: "Spring-разработчик",
-  department: "Веб-разработка",
+  nickname: "yakimenko.nikita",
+  avatarPath: "/avatars/default-user.svg",
+  bio: "Spring-разработчик, занимаюсь разработкой backend-части приложения, работой с базой данных и реализацией REST API.",
+  pronoun: {
+    value: "HE_HIM",
+    label: "он/его",
+  },
+  departmentPosition: {
+    positionName: "Spring-разработчик",
+    departmentName: "Веб-разработка",
+  },
   publicEmail: "yakim.nik@corp.by",
-  bio: "",
-  pronouns: "he/him",
-  socialLink1: "",
-  socialLink2: "",
-  socialLink3: "",
 };
 
 export default function PublicProfilePage() {
   const [form, setForm] = useState<ProfileForm>(initialForm);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState("");
+
+  useEffect(() => {
+    async function loadProfile() {
+      setIsLoading(true);
+      setError("");
+
+      try {
+        const token = localStorage.getItem("accessToken");
+
+        if (!token) {
+          throw new Error("Токен авторизации не найден");
+        }
+
+        const response = await fetch("http://localhost:8080/api/me/profile", {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+
+        if (!response.ok) {
+          throw new Error("Не удалось загрузить профиль пользователя");
+        }
+
+        const data: ProfileForm = await response.json();
+
+        setForm(data);
+      } catch (error) {
+        if (error instanceof Error) {
+          setError(error.message);
+        } else {
+          setError("Произошла неизвестная ошибка");
+        }
+      } finally {
+        setIsLoading(false);
+      }
+    }
+
+    loadProfile();
+  }, []);
 
   const handleChange = (
     event: ChangeEvent<
@@ -42,7 +97,7 @@ export default function PublicProfilePage() {
     }));
   };
 
-  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (event: SyntheticEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     console.log("Профиль сохранён:", form);
@@ -51,6 +106,10 @@ export default function PublicProfilePage() {
   return (
     <section className={styles.page}>
       <h1 className={styles.title}>Публичный профиль</h1>
+
+      {isLoading && <p className={styles.helperText}>Загрузка профиля...</p>}
+
+      {error && <p className={styles.errorText}>{error}</p>}
 
       <form className={styles.form} onSubmit={handleSubmit}>
         <div className={styles.mainColumn}>
@@ -64,16 +123,16 @@ export default function PublicProfilePage() {
 
           <ProfileField
             label="Должность"
-            name="position"
-            value={form.position}
+            name="positionName"
+            value={form.departmentPosition.positionName}
             onChange={handleChange}
             helperText="Изменение должности доступно только администратору, поэтому вы можете направить ему запрос на корректировку данных профиля"
           />
 
           <ProfileField
             label="Отдел"
-            name="department"
-            value={form.department}
+            name="departmentName"
+            value={form.departmentPosition.departmentName}
             onChange={handleChange}
             helperText="Изменение отдела доступно только администратору, поэтому вы можете направить ему запрос на корректировку данных профиля"
           />
@@ -146,8 +205,10 @@ export default function PublicProfilePage() {
               <option value="not-selected">Не указывать</option>
             </select>
           </div>
-
-          <div className={styles.fieldGroup}>
+          <button className={styles.updateProfileButton} type="button">
+            Обновить профиль
+          </button>
+          {/* <div className={styles.fieldGroup}>
             <div className={styles.label}>Социальные сети</div>
 
             <SocialInput
@@ -170,7 +231,7 @@ export default function PublicProfilePage() {
               placeholder="Ссылка на профиль в социальной сети 3"
               onChange={handleChange}
             />
-          </div>
+          </div> */}
         </div>
 
         <aside className={styles.avatarColumn}>
