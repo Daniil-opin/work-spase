@@ -1,5 +1,5 @@
 import { ChangeEvent, useMemo, useState } from "react";
-import { timeToMinutes, isSlotMatchesTimeRange } from "./logic";
+import { isSlotMatchesTimeRange } from "./logic";
 
 import {
   SearchIcon,
@@ -126,6 +126,8 @@ const resources: Resource[] = [
 ];
 
 export default function ResourcesPage() {
+  const [selectedSlot, setSelectedSlot] = useState<string | null>(null);
+  const [bookingMessage, setBookingMessage] = useState<string | null>(null);
   const [favoriteResourceIds, setFavoriteResourceIds] = useState<number[]>([]);
   const [searchValue, setSearchValue] = useState("");
   const [isFiltersOpen, setIsFiltersOpen] = useState(false);
@@ -466,6 +468,40 @@ type ResourceDetailsPanelProps = {
   onToggleFavorite: () => void;
   onClose: () => void;
 };
+function timeToMinutes(time: string) {
+  const [hours, minutes] = time.split(":").map(Number);
+
+  return hours * 60 + minutes;
+}
+
+function parseSlot(slot: string) {
+  const [startTime, endTime] = slot.split(/[–—-]/).map((value) => value.trim());
+
+  return {
+    startTime,
+    endTime,
+    startMinutes: timeToMinutes(startTime),
+    endMinutes: timeToMinutes(endTime),
+  };
+}
+
+function isTimeRangeInsideFreeSlot(
+  startTime: string,
+  endTime: string,
+  availableSlots: string[],
+) {
+  const startMinutes = timeToMinutes(startTime);
+  const endMinutes = timeToMinutes(endTime);
+
+  return availableSlots.some((slot) => {
+    const parsedSlot = parseSlot(slot);
+
+    return (
+      startMinutes >= parsedSlot.startMinutes &&
+      endMinutes <= parsedSlot.endMinutes
+    );
+  });
+}
 
 function ResourceDetailsPanel({
   resource,
@@ -474,6 +510,55 @@ function ResourceDetailsPanel({
   onClose,
 }: ResourceDetailsPanelProps) {
   const isFree = resource.status === "free";
+  const [bookingStartTime, setBookingStartTime] = useState("");
+  const [bookingEndTime, setBookingEndTime] = useState("");
+  const [bookingError, setBookingError] = useState<string | null>(null);
+  const [bookingMessage, setBookingMessage] = useState<string | null>(null);
+
+  const canBook =
+    isFree && bookingStartTime.length > 0 && bookingEndTime.length > 0;
+
+  const handleBookResource = () => {
+    setBookingError(null);
+    setBookingMessage(null);
+
+    if (!bookingStartTime || !bookingEndTime) {
+      setBookingError("Выберите время начала и окончания бронирования.");
+      return;
+    }
+
+    const startMinutes = timeToMinutes(bookingStartTime);
+    const endMinutes = timeToMinutes(bookingEndTime);
+
+    if (startMinutes >= endMinutes) {
+      setBookingError("Время окончания должно быть позже времени начала.");
+      return;
+    }
+
+    if (endMinutes - startMinutes < 60) {
+      setBookingError(
+        "Минимальный промежуток бронирования должен составлять 1 час.",
+      );
+      return;
+    }
+
+    const isAvailable = isTimeRangeInsideFreeSlot(
+      bookingStartTime,
+      bookingEndTime,
+      resource.availableSlots,
+    );
+
+    if (!isAvailable) {
+      setBookingError(
+        "Данный промежуток времени забронировать нельзя, так как он уже занят.",
+      );
+      return;
+    }
+
+    setBookingMessage(
+      `Забронировано место «${resource.title}» на время: ${bookingStartTime} – ${bookingEndTime}`,
+    );
+  };
 
   return (
     <aside className={styles.detailsPanel}>
@@ -547,26 +632,75 @@ function ResourceDetailsPanel({
       <div className={styles.detailsBlock}>
         <h3>
           <ClockMapIcon />
-          Доступные слоты на сегодня:
+          Выберите время бронирования:
+        </h3>
+
+        <div className={styles.bookingTimeFields}>
+          <label className={styles.bookingTimeField}>
+            <span>Начало</span>
+
+            <input
+              type="time"
+              value={bookingStartTime}
+              onChange={(event) => {
+                setBookingStartTime(event.target.value);
+                setBookingMessage(null);
+              }}
+            />
+          </label>
+
+          <label className={styles.bookingTimeField}>
+            <span>Конец</span>
+
+            <input
+              type="time"
+              value={bookingEndTime}
+              onChange={(event) => {
+                setBookingEndTime(event.target.value);
+                setBookingMessage(null);
+              }}
+            />
+          </label>
+        </div>
+
+        {bookingError && (
+          <p className={styles.bookingErrorMessage}>{bookingError}</p>
+        )}
+      </div>
+
+      <div className={styles.detailsBlock}>
+        <h3>
+          <ClockMapIcon />
+          Свободные промежутки на сегодня:
         </h3>
 
         {resource.availableSlots.length > 0 ? (
-          <div className={styles.slotsList}>
+          <div className={styles.freeSlotsList}>
             {resource.availableSlots.map((slot) => (
-              <button key={slot} type="button" className={styles.slotButton}>
+              <div key={slot} className={styles.freeSlotItem}>
                 {slot}
-              </button>
+              </div>
             ))}
           </div>
         ) : (
-          <p className={styles.emptySlots}>На сегодня свободных слотов нет.</p>
+          <p className={styles.emptySlots}>
+            На сегодня свободных промежутков нет.
+          </p>
         )}
       </div>
 
       <div className={styles.divider} />
 
       <div className={styles.detailsActions}>
-        <button className={styles.bookButton} type="button" disabled={!isFree}>
+        {bookingMessage && (
+          <p className={styles.bookingMessage}>{bookingMessage}</p>
+        )}
+        <button
+          className={styles.bookButton}
+          type="button"
+          disabled={!canBook}
+          onClick={handleBookResource}
+        >
           <CalendarIcon />
           Забронировать
         </button>
