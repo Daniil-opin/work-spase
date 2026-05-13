@@ -1,4 +1,5 @@
 import { ChangeEvent, useMemo, useState } from "react";
+import { Link, useLocation, useNavigate } from "react-router";
 
 import {
   SearchIcon,
@@ -54,6 +55,8 @@ const capacityOptions = [
 ];
 
 export default function ResourcesPage() {
+  const navigate = useNavigate();
+
   const [searchValue, setSearchValue] = useState("");
   const [isFiltersOpen, setIsFiltersOpen] = useState(false);
   const [viewMode, setViewMode] = useState<ViewMode>("map");

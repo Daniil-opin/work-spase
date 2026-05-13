@@ -15,6 +15,7 @@ import PrivacyPage from "../pages/PrivacyPage";
 import HistoryPage from "../pages/HistoryPage";
 import ResourcesPage from "../pages/MapPage";
 import EmailPage from "../pages/EmailPage";
+import AccaountPage from "../pages/AccountPage";
 
 const routes = [
   {
@@ -36,6 +37,7 @@ const routes = [
           { path: "privacy", Component: PrivacyPage },
           { path: "history", Component: HistoryPage },
           { path: "email", Component: EmailPage },
+          { path: "account", Component: AccaountPage },
         ],
       },
       { path: "map", Component: ResourcesPage },

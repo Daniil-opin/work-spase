@@ -1,0 +1,189 @@
+.page {
+  width: 100%;
+  max-width: 940px;
+  padding: 16px 0 48px;
+  color: #111827;
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+.title {
+  padding-bottom: 12px;
+  border-bottom: 1px solid #bfc3ca;
+  font-size: 24px;
+  line-height: 1.2;
+  font-weight: 500;
+  margin: 0;
+  color: #020617;
+}
+
+.header {
+  margin-bottom: 28px;
+}
+
+.description {
+  max-width: 620px;
+  margin: 0;
+
+  margin-bottom: 15px;
+  margin: 0;
+
+  color: #64748b;
+
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.5;
+}
+
+.sectionHeader {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.titleSection {
+  margin: 0;
+
+  color: #020617;
+
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+
+  padding: 24px 32px;
+
+  background-color: #ffffff;
+
+  border: 1px solid #e5e7eb;
+  border-radius: 14px;
+  box-shadow: 0 1px 2px rgb(15 23 42 / 3%);
+}
+
+.formHeader {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.label {
+  color: #020617;
+
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+.input {
+  width: 100%;
+  height: 44px;
+  box-sizing: border-box;
+
+  padding: 0 14px;
+
+  color: #020617;
+  background-color: #f8fafc;
+
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  outline: none;
+
+  font-family: inherit;
+  font-size: 14px;
+
+  transition:
+    border-color 0.3s ease,
+    background-color 0.3s ease,
+    box-shadow 0.3s ease;
+
+  &::placeholder {
+    color: #94a3b8;
+  }
+
+  &:focus {
+    background-color: #ffffff;
+    border-color: #1f41ae;
+    box-shadow: 0 0 0 3px rgb(31 65 174 / 12%);
+  }
+}
+
+.formActions {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.primaryButton {
+  min-width: 140px;
+  height: 40px;
+
+  padding: 0 18px;
+
+  color: #ffffff;
+  background-color: #1f41ae;
+
+  border: none;
+  border-radius: 10px;
+
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition:
+    background-color 0.3s ease,
+    opacity 0.3s ease;
+
+  &:hover:not(:disabled) {
+    background-color: #17328a;
+  }
+
+  &:disabled {
+    cursor: not-allowed;
+    opacity: 0.55;
+  }
+}
+
+.errorMessage {
+  margin: 0;
+
+  padding: 12px 14px;
+
+  color: #b91c1c;
+  background-color: #fef2f2;
+
+  border: 1px solid #fecaca;
+  border-radius: 10px;
+
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.4;
+}
+
+.successMessage {
+  margin: 0;
+
+  padding: 12px 14px;
+
+  color: #166534;
+  background-color: #f0fdf4;
+
+  border: 1px solid #bbf7d0;
+  border-radius: 10px;
+
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.4;
+}
