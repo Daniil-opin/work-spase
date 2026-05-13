@@ -24,6 +24,7 @@ export default function HeaderComponent() {
     "/settings/privacy": "Настройки",
     "/settings/history": "Настройки",
     "/settings/email": "Настройки",
+    "/settings/account": "Настройки",
   };
 
   const pageTitle = pageTitleByPath[location.pathname] ?? "Страница";

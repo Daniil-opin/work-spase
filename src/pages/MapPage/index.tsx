@@ -1,5 +1,5 @@
 import { ChangeEvent, useMemo, useState } from "react";
-import { Link, useLocation, useNavigate } from "react-router";
+import { timeToMinutes, isSlotMatchesTimeRange } from "./logic";
 
 import {
   SearchIcon,
@@ -14,7 +14,9 @@ type ViewMode = "map" | "list";
 
 type ResourceType = "all" | "workplace" | "meetingRoom";
 type Floor = "all" | "1" | "2" | "3";
-type Capacity = "any" | "1" | "2" | "4" | "8";
+type Capacity = "any" | "1" | "2" | "4" | "8" | "12";
+
+type ResourceStatus = "free" | "busy";
 
 type Filters = {
   resourceType: ResourceType;
@@ -22,6 +24,23 @@ type Filters = {
   capacity: Capacity;
   startTime: string;
   endTime: string;
+};
+
+type SelectOption<T extends string> = {
+  value: T;
+  label: string;
+};
+
+type Resource = {
+  id: number;
+  title: string;
+  type: Exclude<ResourceType, "all">;
+  floor: number;
+  zone: string;
+  capacity: number;
+  status: ResourceStatus;
+  equipment: string[];
+  availableSlots: string[];
 };
 
 const initialFilters: Filters = {
@@ -32,20 +51,20 @@ const initialFilters: Filters = {
   endTime: "18:00",
 };
 
-const resourceTypeOptions = [
+const resourceTypeOptions: SelectOption<ResourceType>[] = [
   { value: "all", label: "Все типы" },
   { value: "workplace", label: "Рабочие места" },
   { value: "meetingRoom", label: "Переговорные" },
 ];
 
-const floorOptions = [
+const floorOptions: SelectOption<Floor>[] = [
   { value: "all", label: "Все этажи" },
   { value: "1", label: "1 этаж" },
   { value: "2", label: "2 этаж" },
   { value: "3", label: "3 этаж" },
 ];
 
-const capacityOptions = [
+const capacityOptions: SelectOption<Capacity>[] = [
   { value: "any", label: "Любая" },
   { value: "1", label: "1 человек" },
   { value: "2", label: "2 человека" },
@@ -54,17 +73,126 @@ const capacityOptions = [
   { value: "12", label: "12 человек" },
 ];
 
-export default function ResourcesPage() {
-  const navigate = useNavigate();
+const resources: Resource[] = [
+  {
+    id: 1,
+    title: "Рабочее место 1.01",
+    type: "workplace",
+    floor: 1,
+    zone: "Open Space A",
+    capacity: 1,
+    status: "free",
+    equipment: ["Монитор", "Розетка", "Wi-Fi"],
+    availableSlots: ["09:00 — 12:00", "13:00 — 18:00"],
+  },
+  {
+    id: 2,
+    title: "Рабочее место 1.02",
+    type: "workplace",
+    floor: 1,
+    zone: "Open Space A",
+    capacity: 1,
+    status: "busy",
+    equipment: ["Монитор", "Wi-Fi"],
+    availableSlots: [],
+  },
+  {
+    id: 3,
+    title: 'Переговорная "Днепр"',
+    type: "meetingRoom",
+    floor: 1,
+    zone: "Зона переговорных",
+    capacity: 4,
+    status: "free",
+    equipment: ["ТВ-панель", "Видеоконференция", "Wi-Fi"],
+    availableSlots: [
+      "09:00 — 12:00",
+      "12:00 — 15:00",
+      "15:00 — 18:00",
+      "18:00 — 21:00",
+    ],
+  },
+  {
+    id: 4,
+    title: "Рабочее место 2.01",
+    type: "workplace",
+    floor: 2,
+    zone: "Open Space B",
+    capacity: 1,
+    status: "free",
+    equipment: ["Монитор", "Wi-Fi"],
+    availableSlots: ["10:00 — 14:00", "15:00 — 18:00"],
+  },
+];
 
+export default function ResourcesPage() {
+  const [favoriteResourceIds, setFavoriteResourceIds] = useState<number[]>([]);
   const [searchValue, setSearchValue] = useState("");
   const [isFiltersOpen, setIsFiltersOpen] = useState(false);
   const [viewMode, setViewMode] = useState<ViewMode>("map");
   const [filters, setFilters] = useState<Filters>(initialFilters);
+  const [selectedResource, setSelectedResource] = useState<Resource | null>(
+    null,
+  );
 
-  const foundResourcesCount = useMemo(() => {
-    return 6;
-  }, []);
+  const handleToggleFavorite = (resourceId: number) => {
+    setFavoriteResourceIds((prevState) => {
+      if (prevState.includes(resourceId)) {
+        return prevState.filter((id) => id !== resourceId);
+      }
+
+      return [...prevState, resourceId];
+    });
+  };
+
+  const filteredResources = useMemo(() => {
+    const normalizedSearchValue = searchValue.trim().toLowerCase();
+
+    const isDefaultTimeRange =
+      filters.startTime === initialFilters.startTime &&
+      filters.endTime === initialFilters.endTime;
+
+    return resources.filter((resource) => {
+      const searchableText = [
+        resource.title,
+        resource.zone,
+        `Этаж ${resource.floor}`,
+        resource.type === "workplace" ? "Рабочее место" : "Переговорная",
+        ...resource.equipment,
+      ]
+        .join(" ")
+        .toLowerCase();
+
+      const matchesSearch =
+        normalizedSearchValue.length === 0 ||
+        searchableText.includes(normalizedSearchValue);
+
+      const matchesType =
+        filters.resourceType === "all" ||
+        resource.type === filters.resourceType;
+
+      const matchesFloor =
+        filters.floor === "all" || String(resource.floor) === filters.floor;
+
+      const matchesCapacity =
+        filters.capacity === "any" ||
+        resource.capacity >= Number(filters.capacity);
+
+      const matchesTime =
+        isDefaultTimeRange ||
+        resource.availableSlots.some((slot) =>
+          isSlotMatchesTimeRange(slot, filters.startTime, filters.endTime),
+        );
+
+      return (
+        matchesSearch &&
+        matchesType &&
+        matchesFloor &&
+        matchesCapacity &&
+        matchesTime
+      );
+    });
+  }, [filters, searchValue]);
 
   const handleFilterChange = (
     event: ChangeEvent<HTMLSelectElement | HTMLInputElement>,
@@ -80,6 +208,7 @@ export default function ResourcesPage() {
   const handleResetFilters = () => {
     setFilters(initialFilters);
     setSearchValue("");
+    setSelectedResource(null);
   };
 
   return (
@@ -166,7 +295,7 @@ export default function ResourcesPage() {
 
           <div className={styles.filtersFooter}>
             <p className={styles.foundText}>
-              Найдено ресурсов: <span>{foundResourcesCount}</span>
+              Найдено ресурсов: <span>{filteredResources.length}</span>
             </p>
 
             <button
@@ -207,14 +336,252 @@ export default function ResourcesPage() {
           <span>Список</span>
         </button>
       </div>
+
+      <div className={styles.contentLayout}>
+        <div className={styles.mainContent}>
+          {viewMode === "map" && (
+            <div className={styles.mapPlaceholder}>
+              <MapIcon />
+
+              <h2>Карта пока не подключена</h2>
+
+              <p>
+                Здесь позже можно будет разместить интерактивную схему этажа с
+                рабочими местами и переговорными комнатами.
+              </p>
+            </div>
+          )}
+
+          {viewMode === "list" && (
+            <>
+              {filteredResources.length > 0 ? (
+                <div className={styles.resourcesGrid}>
+                  {filteredResources.map((resource) => (
+                    <ResourceCard
+                      key={resource.id}
+                      resource={resource}
+                      isActive={selectedResource?.id === resource.id}
+                      onClick={() => setSelectedResource(resource)}
+                    />
+                  ))}
+                </div>
+              ) : (
+                <div className={styles.emptyState}>
+                  <h2>Ресурсы не найдены</h2>
+
+                  <p>
+                    Попробуйте изменить параметры фильтрации или ввести другой
+                    запрос в строку поиска.
+                  </p>
+                </div>
+              )}
+            </>
+          )}
+        </div>
+      </div>
+
+      {selectedResource && (
+        <div
+          className={styles.detailsBackdrop}
+          role="presentation"
+          onMouseDown={() => setSelectedResource(null)}
+        >
+          <div
+            className={styles.detailsPanelWrapper}
+            role="presentation"
+            onMouseDown={(event) => event.stopPropagation()}
+          >
+            <ResourceDetailsPanel
+              resource={selectedResource}
+              isFavorite={favoriteResourceIds.includes(selectedResource.id)}
+              onToggleFavorite={() => handleToggleFavorite(selectedResource.id)}
+              onClose={() => setSelectedResource(null)}
+            />
+          </div>
+        </div>
+      )}
     </section>
   );
 }
 
-type SelectOption<T extends string> = {
-  value: T;
-  label: string;
+type ResourceCardProps = {
+  resource: Resource;
+  isActive: boolean;
+  onClick: () => void;
 };
+
+function ResourceCard({ resource, isActive, onClick }: ResourceCardProps) {
+  const isFree = resource.status === "free";
+
+  return (
+    <button
+      className={
+        isActive
+          ? `${styles.resourceCard} ${styles.resourceCardActive}`
+          : styles.resourceCard
+      }
+      type="button"
+      onClick={onClick}
+    >
+      <div className={styles.resourceCardHeader}>
+        <h2>{resource.title}</h2>
+
+        <span
+          className={
+            isFree
+              ? `${styles.statusBadge} ${styles.statusFree}`
+              : `${styles.statusBadge} ${styles.statusBusy}`
+          }
+        >
+          {isFree ? "Свободно" : "Занято"}
+        </span>
+      </div>
+
+      <p className={styles.resourceLocation}>
+        Этаж {resource.floor}, {resource.zone}
+      </p>
+
+      <div className={styles.resourceMeta}>
+        <span>
+          <UsersIcon />
+          {resource.type === "meetingRoom"
+            ? `До ${resource.capacity} человек`
+            : resource.capacity}
+        </span>
+
+        {resource.type === "meetingRoom" && (
+          <span>
+            <MonitorIcon />
+            {resource.equipment.length}
+          </span>
+        )}
+      </div>
+    </button>
+  );
+}
+
+type ResourceDetailsPanelProps = {
+  resource: Resource;
+  isFavorite: boolean;
+  onToggleFavorite: () => void;
+  onClose: () => void;
+};
+
+function ResourceDetailsPanel({
+  resource,
+  isFavorite,
+  onToggleFavorite,
+  onClose,
+}: ResourceDetailsPanelProps) {
+  const isFree = resource.status === "free";
+
+  return (
+    <aside className={styles.detailsPanel}>
+      <div className={styles.detailsHeader}>
+        <div>
+          <h2>{resource.title}</h2>
+
+          <p>
+            <LocationIcon />
+            Этаж {resource.floor}, {resource.zone}
+          </p>
+        </div>
+
+        <div className={styles.detailsHeaderActions}>
+          <span
+            className={
+              isFree
+                ? `${styles.statusBadge} ${styles.statusFree}`
+                : `${styles.statusBadge} ${styles.statusBusy}`
+            }
+          >
+            {isFree ? "Свободно" : "Занято"}
+          </span>
+
+          <button
+            className={
+              isFavorite
+                ? `${styles.favoriteButton} ${styles.favoriteButtonActive}`
+                : styles.favoriteButton
+            }
+            type="button"
+            aria-label={
+              isFavorite
+                ? "Удалить место из избранного"
+                : "Добавить место в избранное"
+            }
+            onClick={onToggleFavorite}
+          >
+            <StarIcon isFilled={isFavorite} />
+          </button>
+        </div>
+      </div>
+
+      <div className={styles.detailsLine}>
+        <UsersIcon />
+
+        <span>
+          {resource.type === "meetingRoom"
+            ? `До ${resource.capacity} человек`
+            : `${resource.capacity} человек`}
+        </span>
+      </div>
+
+      {resource.equipment.length > 0 && (
+        <div className={styles.detailsBlock}>
+          <h3>
+            <MonitorIcon />
+            Оснащение:
+          </h3>
+
+          <div className={styles.equipmentList}>
+            {resource.equipment.map((item) => (
+              <span key={item}>{item}</span>
+            ))}
+          </div>
+        </div>
+      )}
+
+      <div className={styles.divider} />
+
+      <div className={styles.detailsBlock}>
+        <h3>
+          <ClockMapIcon />
+          Доступные слоты на сегодня:
+        </h3>
+
+        {resource.availableSlots.length > 0 ? (
+          <div className={styles.slotsList}>
+            {resource.availableSlots.map((slot) => (
+              <button key={slot} type="button" className={styles.slotButton}>
+                {slot}
+              </button>
+            ))}
+          </div>
+        ) : (
+          <p className={styles.emptySlots}>На сегодня свободных слотов нет.</p>
+        )}
+      </div>
+
+      <div className={styles.divider} />
+
+      <div className={styles.detailsActions}>
+        <button className={styles.bookButton} type="button" disabled={!isFree}>
+          <CalendarIcon />
+          Забронировать
+        </button>
+
+        <button
+          className={styles.closeDetailsButton}
+          type="button"
+          onClick={onClose}
+        >
+          Закрыть
+        </button>
+      </div>
+    </aside>
+  );
+}
 
 type SelectFieldProps<T extends string> = {
   label: string;
@@ -255,6 +622,95 @@ function ChevronIcon() {
     <svg viewBox="0 0 24 24" fill="none">
       <path
         d="M7 10L12 15L17 10"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
+
+function UsersIcon() {
+  return (
+    <svg viewBox="0 0 24 24" fill="none">
+      <path
+        d="M16 21V19C16 17.9 15.1 17 14 17H6C4.9 17 4 17.9 4 19V21"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+      />
+      <path
+        d="M10 13C12.2 13 14 11.2 14 9C14 6.8 12.2 5 10 5C7.8 5 6 6.8 6 9C6 11.2 7.8 13 10 13Z"
+        stroke="currentColor"
+        strokeWidth="2"
+      />
+      <path
+        d="M20 21V19C20 18.1 19.4 17.3 18.6 17.1"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+      />
+      <path
+        d="M17 5.1C17.9 5.5 18.5 6.4 18.5 7.5C18.5 8.6 17.9 9.5 17 9.9"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+      />
+    </svg>
+  );
+}
+
+function LocationIcon() {
+  return (
+    <svg viewBox="0 0 24 24" fill="none">
+      <path
+        d="M12 21C12 21 18 15.7 18 9.8C18 6.5 15.3 4 12 4C8.7 4 6 6.5 6 9.8C6 15.7 12 21 12 21Z"
+        stroke="currentColor"
+        strokeWidth="2"
+      />
+      <path
+        d="M12 12C13.1 12 14 11.1 14 10C14 8.9 13.1 8 12 8C10.9 8 10 8.9 10 10C10 11.1 10.9 12 12 12Z"
+        stroke="currentColor"
+        strokeWidth="2"
+      />
+    </svg>
+  );
+}
+
+function CalendarIcon() {
+  return (
+    <svg viewBox="0 0 24 24" fill="none">
+      <path
+        d="M7 3V7"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+      />
+      <path
+        d="M17 3V7"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+      />
+      <path d="M4 9H20" stroke="currentColor" strokeWidth="2" />
+      <path
+        d="M6 5H18C19.1 5 20 5.9 20 7V19C20 20.1 19.1 21 18 21H6C4.9 21 4 20.1 4 19V7C4 5.9 4.9 5 6 5Z"
+        stroke="currentColor"
+        strokeWidth="2"
+      />
+    </svg>
+  );
+}
+type StarIconProps = {
+  isFilled: boolean;
+};
+
+function StarIcon({ isFilled }: StarIconProps) {
+  return (
+    <svg viewBox="0 0 24 24" fill={isFilled ? "currentColor" : "none"}>
+      <path
+        d="M12 3.5L14.6 8.8L20.5 9.7L16.2 13.8L17.2 19.6L12 16.9L6.8 19.6L7.8 13.8L3.5 9.7L9.4 8.8L12 3.5Z"
         stroke="currentColor"
         strokeWidth="2"
         strokeLinecap="round"
